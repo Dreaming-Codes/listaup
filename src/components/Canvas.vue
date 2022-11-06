@@ -9,7 +9,7 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-const renderer = new WebGLRenderer();
+const renderer = new WebGLRenderer({antialias: true, powerPreference: "high-performance"});
 
 camera.position.y = 90;
 camera.position.z = 10;
