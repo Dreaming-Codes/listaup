@@ -38,7 +38,7 @@ html, body {
 }
 *{
   /*noinspection CssInvalidPropertyValue*/
-  overflow: overlay;
+  overflow-y: overlay;
   overflow-x: hidden;
 }
 
