@@ -48,7 +48,7 @@ function playScrollAnimations() {
 
 
 camera.position.y = 90;
-camera.position.z = 10;
+camera.position.z = 9;
 camera.rotation.y = 86.399;
 
 const loader = new GLTFLoader();
