@@ -27,7 +27,7 @@ function playScrollAnimations() {
 
 camera.position.y = 90;
 camera.position.z = 10;
-camera.rotation.y = 86.40617319538832;
+camera.rotation.y = 86.399;
 
 const loader = new GLTFLoader();
 loader.load('model.gltf', function (gltf) {
