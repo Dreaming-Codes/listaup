@@ -4,6 +4,7 @@ import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {fitCameraToObject} from "../threejsUtils";
 import {LazyEngine} from "../utils";
+import {useAnimStateStore} from "../stores/animState";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 let cartello: Object3D | null = null;
@@ -15,23 +16,31 @@ const renderer = new WebGLRenderer({antialias: true, powerPreference: "high-perf
 
 const animationScripts: { start: number; end: number; func: () => void }[] = []
 
-let scrollPercent = 0
-
 const lazyEngine = new LazyEngine()
+
+const animState = useAnimStateStore();
 
 animationScripts.push({
   start: 0,
-  end: 40,
+  end: 10,
   func: () => {
     if (cartello) {
-      camera.position.x = -lazyEngine.lazyCall(fitCameraToObject, cartello, camera.fov, camera.aspect) + 70;
+      camera.position.x = -lazyEngine.lazyCall( fitCameraToObject, cartello, camera.fov, camera.aspect) + 70 - animState.scrollPercent * 2;
     }
+  }
+})
+
+animationScripts.push({
+  start: 10,
+  end: 20,
+  func: () => {
+    //camera.position.z =  20;
   }
 })
 
 function playScrollAnimations() {
   animationScripts.forEach((a) => {
-    if (scrollPercent >= a.start && scrollPercent < a.end) {
+    if (animState.scrollPercent >= a.start && animState.scrollPercent < a.end) {
       a.func()
     }
   })
@@ -56,7 +65,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 onMounted(() => {
   document.addEventListener("scroll", () => {
-    scrollPercent =
+    animState.scrollPercent =
         ((document.documentElement.scrollTop || document.body.scrollTop) /
             ((document.documentElement.scrollHeight ||
                     document.body.scrollHeight) -
