@@ -22,6 +22,12 @@ interface lazyResult {
 
 const lazyCache: Map<Function, lazyResult> = new Map();
 
+/**
+ * Lazy evaluation of a function. The function will only be evaluated once, and the result will be cached as long as args remains the same.
+ * @param fn The function to evaluate lazily
+ * @param args The arguments to pass to the function
+ * @returns The result of the function
+ */
 export function lazyCall<T>(fn: (...args: any[]) => T, ...args: any[]): T {
     if (lazyCache.has(fn) && lazyCache.get(fn)!.args.every((arg, i) => arg === args[i])) {
         return lazyCache.get(fn)!.value;
