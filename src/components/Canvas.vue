@@ -12,6 +12,19 @@ const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight,
 
 const renderer = new WebGLRenderer({antialias: true, powerPreference: "high-performance"});
 
+const animationScripts: { start: number; end: number; func: () => void }[] = []
+
+let scrollPercent = 0
+
+function playScrollAnimations() {
+  animationScripts.forEach((a) => {
+    if (scrollPercent >= a.start && scrollPercent < a.end) {
+      a.func()
+    }
+  })
+}
+
+
 camera.position.y = 90;
 camera.position.z = 10;
 camera.rotation.y = 86.40617319538832;
@@ -32,6 +45,15 @@ loader.load('model.gltf', function (gltf) {
 renderer.setSize(window.innerWidth, window.innerHeight);
 
 onMounted(() => {
+  document.addEventListener("scroll", () => {
+    scrollPercent =
+        ((document.documentElement.scrollTop || document.body.scrollTop) /
+            ((document.documentElement.scrollHeight ||
+                    document.body.scrollHeight) -
+                document.documentElement.clientHeight)) *
+        100;
+  })
+
   renderer.outputEncoding = sRGBEncoding;
 
   canvas.value?.appendChild(renderer.domElement);
@@ -40,7 +62,7 @@ onMounted(() => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
-    if(cartello){
+    if (cartello) {
       camera.position.x = -fitCameraToObject(cartello, camera.fov, camera.aspect) + 70;
     }
 
@@ -49,7 +71,7 @@ onMounted(() => {
 
   const animate = () => {
     requestAnimationFrame(animate);
-    if(renderer.getPixelRatio() !== window.devicePixelRatio) {
+    if (renderer.getPixelRatio() !== window.devicePixelRatio) {
       renderer.setPixelRatio(window.devicePixelRatio);
     }
     renderer.render(scene, camera);
