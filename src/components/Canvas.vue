@@ -24,6 +24,9 @@ animationScripts.push({
   start: 0,
   end: 10,
   func: () => {
+    camera.position.y = 90;
+    camera.position.z = 9;
+    camera.rotation.y = 86.399;
     if (cartello) {
       camera.position.x = -lazyEngine.lazyCall( fitCameraToObject, cartello, camera.fov, camera.aspect) + 70 - animState.scrollPercent * 2;
     }
@@ -34,7 +37,7 @@ animationScripts.push({
   start: 10,
   end: 20,
   func: () => {
-    //camera.position.z =  20;
+    camera.position.y = 90 - (animState.scrollPercent - 10) * 6;
   }
 })
 
@@ -45,11 +48,6 @@ function playScrollAnimations() {
     }
   })
 }
-
-
-camera.position.y = 90;
-camera.position.z = 9;
-camera.rotation.y = 86.399;
 
 const loader = new GLTFLoader();
 loader.load('model.gltf', function (gltf) {
