@@ -43,6 +43,9 @@ onMounted(() => {
 
   const animate = () => {
     requestAnimationFrame(animate);
+    if(renderer.getPixelRatio() !== window.devicePixelRatio) {
+      renderer.setPixelRatio(window.devicePixelRatio);
+    }
     renderer.render(scene, camera);
   };
 
