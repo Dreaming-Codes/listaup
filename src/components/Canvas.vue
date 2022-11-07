@@ -3,7 +3,7 @@ import {Object3D, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "t
 import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {fitCameraToObject} from "../threejsUtils";
-import {lazyCall} from "../utils";
+import {LazyEngine} from "../utils";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 let cartello: Object3D | null = null;
@@ -17,12 +17,14 @@ const animationScripts: { start: number; end: number; func: () => void }[] = []
 
 let scrollPercent = 0
 
+const lazyEngine = new LazyEngine()
+
 animationScripts.push({
   start: 0,
   end: 40,
   func: () => {
     if (cartello) {
-      camera.position.x = -lazyCall(fitCameraToObject, cartello, camera.fov, camera.aspect) + 70;
+      camera.position.x = -lazyEngine.lazyCall(fitCameraToObject, cartello, camera.fov, camera.aspect) + 70;
     }
   }
 })
