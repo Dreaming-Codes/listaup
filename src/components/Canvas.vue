@@ -3,6 +3,7 @@ import {Object3D, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "t
 import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {fitCameraToObject} from "../threejsUtils";
+import {lazyCall} from "../utils";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 let cartello: Object3D | null = null;
@@ -15,6 +16,16 @@ const renderer = new WebGLRenderer({antialias: true, powerPreference: "high-perf
 const animationScripts: { start: number; end: number; func: () => void }[] = []
 
 let scrollPercent = 0
+
+animationScripts.push({
+  start: 0,
+  end: 40,
+  func: () => {
+    if (cartello) {
+      camera.position.x = -lazyCall(fitCameraToObject, cartello, camera.fov, camera.aspect) + 70;
+    }
+  }
+})
 
 function playScrollAnimations() {
   animationScripts.forEach((a) => {
@@ -31,11 +42,8 @@ camera.rotation.y = 86.399;
 
 const loader = new GLTFLoader();
 loader.load('model.gltf', function (gltf) {
-
   scene.add(gltf.scene);
   cartello = scene.getObjectByName("Cartello_Baked")!;
-  camera.position.x = -fitCameraToObject(cartello, camera.fov, camera.aspect) + 70;
-
 }, undefined, function (error) {
 
   console.error(error);
@@ -61,16 +69,12 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-
-    if (cartello) {
-      camera.position.x = -fitCameraToObject(cartello, camera.fov, camera.aspect) + 70;
-    }
-
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
   const animate = () => {
     requestAnimationFrame(animate);
+    playScrollAnimations();
     if (renderer.getPixelRatio() !== window.devicePixelRatio) {
       renderer.setPixelRatio(window.devicePixelRatio);
     }

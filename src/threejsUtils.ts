@@ -6,8 +6,6 @@ export function fitCameraToObject(object: Object3D, hFov: number, aspect: number
 
     let size = boundingBox.getSize(new Vector3());
 
-    console.log(size);
-
     const maxSize = Math.max(size.x, size.y, size.z);
 
     const fitHeightDistance = maxSize / (2 * Math.atan((Math.PI * hFov) / 360));

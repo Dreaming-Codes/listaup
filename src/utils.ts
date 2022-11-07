@@ -14,3 +14,20 @@ export function lerp(x: number, y: number, a: number): number {
 function scalePercent(scrollPercent: number, start: number, end: number) {
     return (scrollPercent - start) / (end - start)
 }
+
+interface lazyResult {
+    args: any[],
+    value: any
+}
+
+const lazyCache: Map<Function, lazyResult> = new Map();
+
+export function lazyCall<T>(fn: (...args: any[]) => T, ...args: any[]): T {
+    if (lazyCache.has(fn) && lazyCache.get(fn)!.args.every((arg, i) => arg === args[i])) {
+        return lazyCache.get(fn)!.value;
+    }
+
+    let result = fn(...args);
+    lazyCache.set(fn, {args, value: result});
+    return result;
+}
