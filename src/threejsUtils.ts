@@ -2,15 +2,16 @@ import {Box3, Object3D, Vector3} from "three";
 
 export function fitCameraToObject(object: Object3D, hFov: number, aspect: number) {
     const boundingBox = new Box3();
-    boundingBox.setFromObject(object);
+    boundingBox.expandByObject(object);
 
-    let size = new Vector3();
-    boundingBox.getSize(size);
+    let size = boundingBox.getSize(new Vector3());
 
-    // get the max side of the bounding box
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const fov = hFov * (Math.PI / 180);
-    const fovh = 2 * Math.atan(Math.tan(fov / 2) * aspect);
-    return Math.min(Math.abs(maxDim / 4 * Math.tan(fov * 2)), Math.abs(maxDim / 4 * Math.tan(fovh * 2)));
+    console.log(size);
 
+    const maxSize = Math.max(size.x, size.y, size.z);
+
+    const fitHeightDistance = maxSize / (2 * Math.atan((Math.PI * hFov) / 360));
+    const fitWidthDistance = fitHeightDistance / aspect;
+
+    return Math.max(fitHeightDistance, fitWidthDistance);
 }

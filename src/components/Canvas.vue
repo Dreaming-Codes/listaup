@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import {PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
+import {Object3D, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
 import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {fitCameraToObject} from "../threejsUtils";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
+let cartello: Object3D | null = null;
 
 const scene = new Scene();
 const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -19,8 +20,8 @@ const loader = new GLTFLoader();
 loader.load('model.gltf', function (gltf) {
 
   scene.add(gltf.scene);
-  console.log(scene.getObjectByName("Cartello_Baked"));
-  camera.position.x = fitCameraToObject(scene.getObjectByName("Cartello_Baked")!, camera.fov, camera.aspect) - 20;
+  cartello = scene.getObjectByName("Cartello_Baked")!;
+  camera.position.x = -fitCameraToObject(cartello, camera.fov, camera.aspect) + 70;
 
 }, undefined, function (error) {
 
@@ -38,6 +39,11 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+
+    if(cartello){
+      camera.position.x = -fitCameraToObject(cartello, camera.fov, camera.aspect) + 70;
+    }
+
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
 
