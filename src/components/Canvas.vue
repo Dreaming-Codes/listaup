@@ -1,65 +1,87 @@
 <script lang="ts" setup>
-import {Object3D, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
+import {AnimationClip, AnimationMixer, Camera, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
 import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
-import {fitCameraToObject} from "../threejsUtils";
-import {LazyEngine} from "../utils";
 import {useAnimStateStore} from "../stores/animState";
+import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
-let cartello: Object3D | null = null;
 
+//Three.js scene
 const scene = new Scene();
-const camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
+//Three.js renderer
 const renderer = new WebGLRenderer({antialias: true, powerPreference: "high-performance"});
+//Render in sRGB color space
+renderer.outputEncoding = sRGBEncoding;
+//Setting render size
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-const animationScripts: { start: number; end: number; func: () => void }[] = []
+//Three.js camera
+let camera: PerspectiveCamera;
 
-const lazyEngine = new LazyEngine()
-
+//animState store to share scroll animation state between components
 const animState = useAnimStateStore();
 
-animationScripts.push({
-  start: 0,
-  end: 10,
-  func: () => {
-    camera.position.y = 90;
-    camera.position.z = 9;
-    camera.rotation.y = 86.399;
-    if (cartello) {
-      camera.position.x = -lazyEngine.lazyCall( fitCameraToObject, cartello, camera.fov, camera.aspect) + 70 - animState.scrollPercent * 2;
-    }
-  }
-})
+let animMixer: AnimationMixer;
 
-animationScripts.push({
-  start: 10,
-  end: 20,
-  func: () => {
-    camera.position.y = 90 - (animState.scrollPercent - 10) * 6;
-  }
-})
+//Animation loop
+function animate() {
+  //Tell webgl to call animate again on the next frame
+  requestAnimationFrame(animate);
 
-function playScrollAnimations() {
-  animationScripts.forEach((a) => {
-    if (animState.scrollPercent >= a.start && animState.scrollPercent < a.end) {
-      a.func()
-    }
-  })
+  //If the actual pixel ratio is different from the one used to render the scene, update pixel ratio
+  if (renderer.getPixelRatio() !== window.devicePixelRatio) {
+    renderer.setPixelRatio(window.devicePixelRatio);
+  }
+
+  //animMixer.setTime(10)
+  //animMixer.update(-0.01);
+
+  //Render the scene
+  renderer.render(scene, camera);
 }
 
+//Dracoloader to load compressed gltf files
+const dracoLoader = new DRACOLoader();
+//Using decoder from the latest GitHub commit
+//TODO: Use a local copy of the decoder
+dracoLoader.setDecoderPath('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/');
+
+//GLTF loader
 const loader = new GLTFLoader();
-loader.load('model.gltf', function (gltf) {
+//Set the draco loader as the decoder for the GLTF loader
+loader.setDRACOLoader(dracoLoader);
+
+
+
+loader.load('scene.gltf', (gltf) => {
+  //Add the loaded model to the scene
   scene.add(gltf.scene);
-  cartello = scene.getObjectByName("Cartello_Baked")!;
-}, undefined, function (error) {
 
+  //Add the animations to the animation mixer
+  animMixer = new AnimationMixer( gltf.scene );
+  animMixer.timeScale = 0.416;
+
+  //Play all the animations of the model
+  gltf.animations.forEach((clip) => {
+    animMixer.clipAction(clip).play();
+  })
+
+  //Get the camera from the loaded model
+  camera = gltf.cameras.find(c => c.name === "ThreeCamera") as PerspectiveCamera;
+  //Fit the camera to the screen
+  camera.aspect = window.innerWidth / window.innerHeight;
+  //Update the camera projection matrix
+  camera.updateProjectionMatrix();
+  animate();
+  animState.isLoading = false;
+
+}, undefined, (error) => {
+  animState.errorState = error;
   console.error(error);
-
 });
 
-renderer.setSize(window.innerWidth, window.innerHeight);
 
 onMounted(() => {
   document.addEventListener("scroll", () => {
@@ -69,28 +91,23 @@ onMounted(() => {
                     document.body.scrollHeight) -
                 document.documentElement.clientHeight)) *
         100;
-  })
 
-  renderer.outputEncoding = sRGBEncoding;
+    //Setting animation time to the scroll percent
+    animMixer.setTime(animState.scrollPercent);
+  })
 
   canvas.value?.appendChild(renderer.domElement);
 
+  //On window resize, update the camera aspect and renderer size
   window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    //Check if the camera is defined since it is not defined until the model is loaded
+    if (camera) {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+    }
+
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
-
-  const animate = () => {
-    requestAnimationFrame(animate);
-    playScrollAnimations();
-    if (renderer.getPixelRatio() !== window.devicePixelRatio) {
-      renderer.setPixelRatio(window.devicePixelRatio);
-    }
-    renderer.render(scene, camera);
-  };
-
-  animate();
 });
 
 </script>
