@@ -35,9 +35,6 @@ function animate() {
     renderer.setPixelRatio(window.devicePixelRatio);
   }
 
-  //animMixer.setTime(10)
-  //animMixer.update(-0.01);
-
   //Render the scene
   renderer.render(scene, camera);
 }
@@ -72,6 +69,15 @@ loader.load('scene.gltf', (gltf) => {
   camera = gltf.cameras.find(c => c.name === "ThreeCamera") as PerspectiveCamera;
   //Fit the camera to the screen
   camera.aspect = window.innerWidth / window.innerHeight;
+
+  let fov = 15.376895462908774;
+
+  if(camera.aspect < 1){
+    fov = 20 / camera.aspect;
+  }
+
+  camera.fov = fov;
+
   //Update the camera projection matrix
   camera.updateProjectionMatrix();
   animate();
@@ -92,6 +98,7 @@ onMounted(() => {
                 document.documentElement.clientHeight)) *
         100;
 
+    //Overscrolling fix for safari on iOS
     if(scroll > 100) {
       scroll = 100
     }
@@ -99,7 +106,9 @@ onMounted(() => {
     animState.scrollPercent = scroll;
 
     //Setting animation time to the scroll percent
-    animMixer.setTime(scroll);
+    if(animMixer){
+      animMixer.setTime(scroll);
+    }
   })
 
   canvas.value?.appendChild(renderer.domElement);
@@ -109,6 +118,15 @@ onMounted(() => {
     //Check if the camera is defined since it is not defined until the model is loaded
     if (camera) {
       camera.aspect = window.innerWidth / window.innerHeight;
+
+      let fov = 15.376895462908774;
+
+      if(camera.aspect < 1){
+        fov = 20 / camera.aspect;
+      }
+
+      camera.fov = fov;
+
       camera.updateProjectionMatrix();
     }
 
