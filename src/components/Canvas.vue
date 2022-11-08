@@ -85,15 +85,21 @@ loader.load('scene.gltf', (gltf) => {
 
 onMounted(() => {
   document.addEventListener("scroll", () => {
-    animState.scrollPercent =
+    let scroll =
         ((document.documentElement.scrollTop || document.body.scrollTop) /
             ((document.documentElement.scrollHeight ||
                     document.body.scrollHeight) -
                 document.documentElement.clientHeight)) *
         100;
 
+    if(scroll > 100) {
+      scroll = 100
+    }
+
+    animState.scrollPercent = scroll;
+
     //Setting animation time to the scroll percent
-    animMixer.setTime(animState.scrollPercent);
+    animMixer.setTime(scroll);
   })
 
   canvas.value?.appendChild(renderer.domElement);
