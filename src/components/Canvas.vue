@@ -51,6 +51,10 @@ const loader = new GLTFLoader();
 //Set the draco loader as the decoder for the GLTF loader
 loader.setDRACOLoader(dracoLoader);
 
+function setAllCulled(obj, culled) {
+  obj.frustumCulled = culled;
+  obj.children.forEach(child => setAllCulled(child, culled));
+}
 
 
 loader.load('scene.gltf', async (gltf) => {
@@ -81,19 +85,14 @@ loader.load('scene.gltf', async (gltf) => {
 
   //Update the camera projection matrix
   camera.updateProjectionMatrix();
+
+  setAllCulled(scene, false);
+  renderer.render(scene, camera);
+  setAllCulled(scene, true);
+
   animate();
 
-  let scrollFraction = document.documentElement.scrollHeight / 10;
-
   window.scrollTo({behavior: undefined, top: 0});
-
-  for (let i = 1; i <= 10; i++) {
-    window.scrollTo({behavior: "smooth", top: scrollFraction * i});
-    await delay(200);
-  }
-
-  window.scrollTo({behavior: undefined, top: 0});
-
 
   animState.isLoading = false;
   document.documentElement.style.overflowY = "overlay";
