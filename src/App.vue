@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import Canvas from "./components/Canvas.vue";
 import {useAnimStateStore} from "./stores/animState";
 
@@ -6,20 +6,27 @@ const animState = useAnimStateStore();
 </script>
 
 <template>
-  <Canvas :style='{visibility: animState.isLoading ? "hidden" : undefined}' id="canvas" />
-  <main>
+  <div id="app">
+    <Canvas id="canvas" :style='{visibility: animState.isLoading ? "hidden" : undefined}'/>
+    <main>
 
-  </main>
+    </main>
+  </div>
 </template>
 
 <style scoped>
-#canvas{
+#app{
+  position: relative;
+}
+
+#canvas {
   top: 0;
   left: 0;
   position: fixed;
   width: 100%;
   height: 100%;
 }
+
 main {
   width: 100%;
   height: 900vw;
@@ -39,8 +46,8 @@ html, body {
   height: 100%;
   background-color: black;
 }
-*{
-  /*noinspection CssInvalidPropertyValue*/
+
+* {
   overflow-y: hidden;
   overflow-x: hidden;
 }
