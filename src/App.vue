@@ -19,7 +19,7 @@ import Canvas from "./components/Canvas.vue";
 }
 main {
   width: 100%;
-  height: 1500vw;
+  height: 900vw;
   z-index: 99;
   position: absolute;
   justify-content: center;
