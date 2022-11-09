@@ -6,19 +6,13 @@ const animState = useAnimStateStore();
 </script>
 
 <template>
-  <div id="app">
-    <Canvas id="canvas" :style='{visibility: animState.isLoading ? "hidden" : undefined}'/>
-    <main>
+  <Canvas id="canvas" :style='{visibility: animState.isLoading ? "hidden" : undefined}'/>
+  <main>
 
-    </main>
-  </div>
+  </main>
 </template>
 
 <style scoped>
-#app{
-  position: relative;
-}
-
 #canvas {
   top: 0;
   left: 0;
