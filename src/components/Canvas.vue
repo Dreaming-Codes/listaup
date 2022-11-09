@@ -4,6 +4,7 @@ import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {useAnimStateStore} from "../stores/animState";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
+import {delay} from "../utils";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 
@@ -52,7 +53,7 @@ loader.setDRACOLoader(dracoLoader);
 
 
 
-loader.load('scene.gltf', (gltf) => {
+loader.load('scene.gltf', async (gltf) => {
   //Add the loaded model to the scene
   scene.add(gltf.scene);
 
@@ -81,7 +82,21 @@ loader.load('scene.gltf', (gltf) => {
   //Update the camera projection matrix
   camera.updateProjectionMatrix();
   animate();
+
+  let scrollFraction = document.documentElement.scrollHeight / 10;
+
+  window.scrollTo({behavior: undefined, top: 0});
+
+  for (let i = 1; i <= 10; i++) {
+    window.scrollTo({behavior: "smooth", top: scrollFraction * i});
+    await delay(200);
+  }
+
+  window.scrollTo({behavior: undefined, top: 0});
+
+
   animState.isLoading = false;
+  document.documentElement.style.overflowY = "overlay";
 
 }, undefined, (error) => {
   animState.errorState = error;

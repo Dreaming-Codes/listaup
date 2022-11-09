@@ -48,3 +48,12 @@ export class LazyEngine {
         this.cache.clear();
     }
 }
+
+
+export function delay(ms: number): Promise<void>{
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            resolve();
+        }, ms)
+    })
+}

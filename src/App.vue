@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import Canvas from "./components/Canvas.vue";
+import {useAnimStateStore} from "./stores/animState";
+
+const animState = useAnimStateStore();
 </script>
 
 <template>
-  <Canvas id="canvas" />
+  <Canvas :style='{visibility: animState.isLoading ? "hidden" : undefined}' id="canvas" />
   <main>
 
   </main>
@@ -38,7 +41,7 @@ html, body {
 }
 *{
   /*noinspection CssInvalidPropertyValue*/
-  overflow-y: overlay;
+  overflow-y: hidden;
   overflow-x: hidden;
 }
 
