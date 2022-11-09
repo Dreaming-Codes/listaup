@@ -116,6 +116,8 @@ onMounted(() => {
     //Overscrolling fix for safari on iOS
     if(scroll > 100) {
       scroll = 100
+    }else if (scroll < 0){
+      scroll = 0;
     }
 
     animState.scrollPercent = scroll;
