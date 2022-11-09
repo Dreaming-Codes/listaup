@@ -113,7 +113,7 @@ onMounted(() => {
                 document.documentElement.clientHeight)) *
         100;
 
-    //Overscrolling fix for safari on iOS
+    //Overscroll fix for safari on iOS
     if(scroll > 100) {
       scroll = 100
     }else if (scroll < 0){
