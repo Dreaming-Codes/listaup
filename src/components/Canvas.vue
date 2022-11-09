@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import {AnimationClip, AnimationMixer, Camera, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
+import {AnimationMixer, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
 import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {useAnimStateStore} from "../stores/animState";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
-import {delay} from "../utils";
+import {setAllCulled} from "../threejsUtils";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 
@@ -51,18 +51,12 @@ const loader = new GLTFLoader();
 //Set the draco loader as the decoder for the GLTF loader
 loader.setDRACOLoader(dracoLoader);
 
-function setAllCulled(obj, culled) {
-  obj.frustumCulled = culled;
-  obj.children.forEach(child => setAllCulled(child, culled));
-}
-
-
 loader.load('scene.gltf', async (gltf) => {
   //Add the loaded model to the scene
   scene.add(gltf.scene);
 
   //Add the animations to the animation mixer
-  animMixer = new AnimationMixer( gltf.scene );
+  animMixer = new AnimationMixer(gltf.scene);
   animMixer.timeScale = 0.416;
 
   //Play all the animations of the model
@@ -77,7 +71,7 @@ loader.load('scene.gltf', async (gltf) => {
 
   let fov = 15.376895462908774;
 
-  if(camera.aspect < 1){
+  if (camera.aspect < 1) {
     fov = 20 / camera.aspect;
   }
 
@@ -113,16 +107,16 @@ onMounted(() => {
         100;
 
     //Overscroll fix for safari on iOS
-    if(scroll > 100) {
+    if (scroll > 100) {
       scroll = 100
-    }else if (scroll < 0){
+    } else if (scroll < 0) {
       scroll = 0;
     }
 
     animState.scrollPercent = scroll;
 
     //Setting animation time to the scroll percent
-    if(animMixer){
+    if (animMixer) {
       animMixer.setTime(scroll);
     }
   })
@@ -137,7 +131,7 @@ onMounted(() => {
 
       let fov = 15.376895462908774;
 
-      if(camera.aspect < 1){
+      if (camera.aspect < 1) {
         fov = 20 / camera.aspect;
       }
 

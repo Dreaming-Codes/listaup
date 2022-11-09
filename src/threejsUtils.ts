@@ -13,3 +13,8 @@ export function fitCameraToObject(object: Object3D, hFov: number, aspect: number
 
     return Math.max(fitHeightDistance, fitWidthDistance);
 }
+
+export function setAllCulled(obj: Object3D, culled: boolean) {
+    obj.frustumCulled = culled;
+    obj.children.forEach(child => setAllCulled(child, culled));
+}
