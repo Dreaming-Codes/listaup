@@ -72,7 +72,7 @@ loader.load('scene.gltf', async (gltf) => {
   let fov = 15.376895462908774;
 
   if (camera.aspect < 1) {
-    fov = 20 / camera.aspect;
+    fov = 25 / camera.aspect;
   }
 
   camera.fov = fov;
