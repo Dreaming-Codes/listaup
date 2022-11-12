@@ -90,10 +90,12 @@ loader.load('scene.glb', async (gltf) => {
   window.scrollTo({behavior: undefined, top: 0});
 
   animState.loadingPercent = 1;
+  console.log(animState.loadingPercent)
   document.documentElement.style.overflowY = "overlay";
 
 }, (progress)=>{
   animState.loadingPercent = progress.loaded / progress.total * 0.9;
+  console.log(animState.loadingPercent)
 }, (error) => {
   animState.errorState = error;
   console.error(error);

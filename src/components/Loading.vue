@@ -8,7 +8,7 @@ const animState = useAnimStateStore();
   <div>
     <h1 style="color: white">
       WIP LOADING<br>
-      {{ animState.loadingPercent }}%
+      {{ animState.loadingPercent  * 100 }}%
     </h1>
   </div>
 </template>
