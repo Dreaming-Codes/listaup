@@ -13,7 +13,7 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 const scene = new Scene();
 
 //Three.js renderer
-const renderer = new WebGLRenderer({antialias: true});
+const renderer = new WebGLRenderer({antialias: true, powerPreference: "high-performance"});
 //Render in sRGB color space
 renderer.outputEncoding = sRGBEncoding;
 //Setting render size
