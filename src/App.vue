@@ -6,7 +6,7 @@ const animState = useAnimStateStore();
 </script>
 
 <template>
-  <Canvas id="canvas" :style='{visibility: animState.isLoading ? "hidden" : undefined}'/>
+  <Canvas id="canvas" :style='{visibility: animState.loadingPercent < 1 ? "hidden" : undefined}'/>
   <main>
 
   </main>
