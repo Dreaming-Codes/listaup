@@ -5,6 +5,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {useAnimStateStore} from "../stores/animState";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 import {setAllCulled} from "../threejsUtils";
+import {delay} from "../utils";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 
@@ -93,8 +94,7 @@ loader.load('scene.glb', async (gltf) => {
   document.documentElement.style.overflowY = "overlay";
 
 }, (progress)=>{
-  console.log(progress.loaded / progress.total * 0.99);
-  animState.loadingPercent = progress.loaded / progress.total * 99.9;
+  animState.loadingPercent = progress.loaded / progress.total * 0.9;
 }, (error) => {
   animState.errorState = error;
   console.error(error);

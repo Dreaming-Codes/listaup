@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import Canvas from "./components/Canvas.vue";
 import {useAnimStateStore} from "./stores/animState";
+import Loading from "./components/Loading.vue";
 
 const animState = useAnimStateStore();
 </script>
 
 <template>
+  <Loading v-if="animState.loadingPercent < 1"/>
   <Canvas id="canvas" :style='{visibility: animState.loadingPercent < 1 ? "hidden" : undefined}'/>
   <main>
-
   </main>
 </template>
 

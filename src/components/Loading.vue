@@ -1,12 +1,17 @@
-<template>
+<script setup>
+import {useAnimStateStore} from "../stores/animState";
 
-</template>
-
-<script>
-export default {
-  name: "Loading"
-}
+const animState = useAnimStateStore();
 </script>
+
+<template>
+  <div>
+    <h1 style="color: white">
+      WIP LOADING<br>
+      {{ animState.loadingPercent }}%
+    </h1>
+  </div>
+</template>
 
 <style scoped>
 
