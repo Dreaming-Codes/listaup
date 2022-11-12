@@ -8,7 +8,7 @@ const animState = useAnimStateStore();
 
 <template>
   <Loading v-if="animState.loadingPercent < 1"/>
-  <Canvas id="canvas" :style='{visibility: animState.loadingPercent < 1 ? "hidden" : undefined}'/>
+  <Canvas id="canvas"/>
   <main>
   </main>
 </template>
