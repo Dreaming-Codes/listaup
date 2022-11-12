@@ -51,13 +51,13 @@ const loader = new GLTFLoader();
 //Set the draco loader as the decoder for the GLTF loader
 loader.setDRACOLoader(dracoLoader);
 
-loader.load('scene.gltf', async (gltf) => {
+loader.load('scene.glb', async (gltf) => {
   //Add the loaded model to the scene
   scene.add(gltf.scene);
 
   //Add the animations to the animation mixer
   animMixer = new AnimationMixer(gltf.scene);
-  animMixer.timeScale = 0.416;
+  animMixer.timeScale = 0.333;
 
   //Play all the animations of the model
   gltf.animations.forEach((clip) => {
