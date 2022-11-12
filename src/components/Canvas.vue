@@ -13,7 +13,7 @@ const canvas = ref<HTMLCanvasElement | null>(null);
 const scene = new Scene();
 
 //Three.js renderer
-const renderer = new WebGLRenderer({antialias: true, powerPreference: "high-performance"});
+const renderer = new WebGLRenderer({antialias: true});
 //Render in sRGB color space
 renderer.outputEncoding = sRGBEncoding;
 //Setting render size
@@ -90,7 +90,6 @@ loader.load('scene.glb', async (gltf) => {
   window.scrollTo({behavior: undefined, top: 0});
 
   animState.loadingPercent = 1;
-  console.log(animState.loadingPercent)
   document.documentElement.style.overflowY = "overlay";
 
 }, (progress)=>{
