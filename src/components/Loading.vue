@@ -77,7 +77,7 @@ onUnmounted(()=>{
 
 .text {
   font-weight: 100;
-  font-size: 10vh;
+  font-size: 10vw;
   color: #FAFAFA;
 }
 </style>
