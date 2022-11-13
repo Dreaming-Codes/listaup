@@ -29,7 +29,7 @@ async function finishedCurrentWriting() {
     await delay(400);
     text.value = queue[queueIndex];
     return;
-  } else if(queueIndex === queue.length) {
+  } else if (queueIndex === queue.length) {
     console.log("Finished writing");
     queueIndex = queue.length + 1;
     await delay(1000);
@@ -38,24 +38,24 @@ async function finishedCurrentWriting() {
   }
 
 
-  if(updateTimeInterval){
+  if (updateTimeInterval) {
     return;
   }
 
-  updateTimeInterval = setInterval(()=>{
+  updateTimeInterval = setInterval(() => {
     if (queueIndex >= queue.length + 1) {
       text.value = "Loading " + Math.floor(animState.loadingPercent * 100) + "%";
     }
   }, 1000);
 }
 
-onUnmounted(()=>{
+onUnmounted(() => {
   clearInterval(updateTimeInterval);
 });
 </script>
 
 <template>
-  <div class="container">
+  <div class="container glitchedLoading">
     <GlitchedWriter :options="glitchedWriterOptions" :text="text" appear class="text" preset="neo"
                     @finish="finishedCurrentWriting"></GlitchedWriter>
   </div>
@@ -77,5 +77,13 @@ onUnmounted(()=>{
   font-weight: 100;
   font-size: 10vw;
   color: #FAFAFA;
+}
+</style>
+<style lang="scss">
+.glitchedLoading {
+  //Glitched writer
+  .gw-glitched {
+    color: #757575;
+  }
 }
 </style>
