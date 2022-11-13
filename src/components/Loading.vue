@@ -8,7 +8,7 @@ const animState = useAnimStateStore();
 
 const glitchedWriterOptions = {
   letterize: true,
-  interval: [10, 30]
+  interval: [10, 20]
 };
 
 let queueIndex = 0;
