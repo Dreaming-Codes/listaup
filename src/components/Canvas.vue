@@ -140,10 +140,9 @@ loader.load('scene.glb', async (gltf) => {
 onMounted(() => {
   document.addEventListener("scroll", () => {
     let scroll =
-        ((document.documentElement.scrollTop || document.body.scrollTop) /
-            ((document.documentElement.scrollHeight ||
-                    document.body.scrollHeight) -
-                document.documentElement.clientHeight)) *
+        (document.documentElement.scrollTop /
+            (document.documentElement.scrollHeight -
+                window.innerHeight)) *
         100;
 
     //Overscroll fix for safari on iOS
