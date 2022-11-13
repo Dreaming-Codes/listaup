@@ -93,7 +93,7 @@ loader.load('scene.glb', async (gltf) => {
   console.log(animState.loadingPercent)
 
 }, (progress)=>{
-  animState.loadingPercent = progress.loaded / progress.total * 0.9;
+  animState.loadingPercent = progress.loaded / progress.total * 0.99;
   console.log(animState.loadingPercent)
 }, (error) => {
   animState.errorState = error;
