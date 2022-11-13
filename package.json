@@ -17,6 +17,7 @@
     "vue-glitched-writer": "^1.2.2"
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "2.7.0",
     "@parcel/transformer-vue": "2.7.0",
     "@types/node": "^16.11.68",
     "@types/three": "^0.144.0",

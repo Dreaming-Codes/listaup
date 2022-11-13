@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import {AnimationMixer, Color, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
+import {AnimationMixer, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
 import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {useAnimStateStore} from "../stores/animState";
 import {DRACOLoader} from "three/examples/jsm/loaders/DRACOLoader";
 import {setAllCulled} from "../threejsUtils";
-import {delay} from "../utils";
 
 const canvas = ref<HTMLCanvasElement | null>(null);
 
@@ -33,8 +32,9 @@ let targetScrollNumber = 0;
 function animate() {
   const scrollDifference = targetScrollNumber - animState.scrollPercent;
 
-  if(Math.abs(scrollDifference) != 0){
-    animState.scrollPercent += Math.abs(scrollDifference) < 1 ? scrollDifference : 0.2 * (scrollDifference / Math.abs(scrollDifference));
+  if (Math.abs(scrollDifference) != 0) {
+    animState.scrollPercent += Math.abs(scrollDifference) < 1 ? scrollDifference : 0.2 * (scrollDifference / Math.abs(
+        scrollDifference));
     animMixer.setTime(animState.scrollPercent)
   }
 
@@ -60,6 +60,27 @@ dracoLoader.setDecoderPath('https://raw.githubusercontent.com/mrdoob/three.js/de
 const loader = new GLTFLoader();
 //Set the draco loader as the decoder for the GLTF loader
 loader.setDRACOLoader(dracoLoader);
+
+animState.animText.push({
+      title: 'Lorenzo Rizzotti',
+      email: 'rizzotti@listaup.net',
+      range: [16.18705035971223, 25.899280575539567],
+    },
+    {
+      title: 'Maya Bellanca',
+      email: 'maya@listaup.net',
+      range: [32.82374100719424, 43.589414182939365],
+    },
+    {
+      title: 'Alessandro Skvortsov',
+      email: 'alessandro@listaup.net',
+      range: [50.51387461459404, 60.22610483042138],
+    },
+    {
+      title: "Piernoel Asuncion",
+      email: "asuncion@listaup.net",
+      range: [70.516443987667, 80.22610483042138],
+    });
 
 loader.load('scene.glb', async (gltf) => {
   //Add the loaded model to the scene
@@ -101,7 +122,7 @@ loader.load('scene.glb', async (gltf) => {
   animState.loadingPercent = 1;
   console.log(animState.loadingPercent)
 
-}, (progress)=>{
+}, (progress) => {
   animState.loadingPercent = progress.loaded / progress.total * 0.99;
   console.log(animState.loadingPercent)
 }, (error) => {

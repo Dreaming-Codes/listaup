@@ -2,13 +2,15 @@
 import Canvas from "./components/Canvas.vue";
 import {useAnimStateStore} from "./stores/animState";
 import Loading from "./components/Loading.vue";
+import Description from "./components/Description.vue";
 
 const animState = useAnimStateStore();
 </script>
 
 <template>
   <Canvas id="canvas"/>
-  <Transition>
+  <Description/>
+  <Transition name="bouncefade">
     <Loading v-if="!animState.loadingScreenFinished || animState.loadingPercent < 1"/>
     <main v-else/>
   </Transition>
@@ -35,18 +37,6 @@ main {
 }
 </style>
 <style>
-.v-enter-active,
-.v-leave-active {
-  transition: all 1s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  transform: scale(2);
-  opacity: 0;
-}
-
-
 html, body {
   margin: 0;
   padding: 0;

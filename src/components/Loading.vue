@@ -62,8 +62,6 @@ onUnmounted(()=>{
 </template>
 
 <style scoped>
-@import 'https://fonts.googleapis.com/css?family=Roboto+Mono:100';
-
 .container {
   font-family: 'Roboto Mono', monospace;
   position: absolute;
@@ -79,10 +77,5 @@ onUnmounted(()=>{
   font-weight: 100;
   font-size: 10vw;
   color: #FAFAFA;
-}
-</style>
-<style>
-.gw-glitched {
-  color: #757575;
 }
 </style>

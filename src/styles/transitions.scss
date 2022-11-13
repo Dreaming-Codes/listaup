@@ -1,0 +1,28 @@
+@keyframes fromdown {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.fromdown-enter-active {
+  animation: fromdown 0.5s;
+}
+.fromdown-leave-active {
+  animation: fromdown 0.5s reverse;
+}
+
+.bouncefade-enter-active,
+.bouncefade-leave-active {
+  transition: all 1s ease;
+}
+
+.bouncefade-enter-from,
+.bouncefade-leave-to {
+  transform: scale(2);
+  opacity: 0;
+}
