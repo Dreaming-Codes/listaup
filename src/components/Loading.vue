@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import {useAnimStateStore} from "../stores/animState";
 import GlitchedWriter from "vue-glitched-writer";
-import {ref} from "vue";
+import {onUnmounted, ref} from "vue";
 import {delay} from "../utils";
 
 const animState = useAnimStateStore();
 
 const glitchedWriterOptions = {
-  letterize: true
+  letterize: true,
+  interval: [10, 30]
 };
 
 let queueIndex = 0;
@@ -20,17 +21,37 @@ const queue = [
 
 let text = ref(queue[0]);
 
+let updateTimeInterval: number;
+
 async function finishedCurrentWriting() {
   queueIndex++;
   if (queueIndex < queue.length) {
     await delay(400);
     text.value = queue[queueIndex];
-  } else {
+    return;
+  } else if(queueIndex === queue.length) {
+    console.log("Finished writing");
+    queueIndex = queue.length + 1;
+    await delay(1000);
     animState.loadingScreenFinished = true;
-    text.value = "Loading " + Math.floor(animState.loadingPercent * 100) + "%";
+    await delay(1000);
   }
 
+
+  if(updateTimeInterval){
+    return;
+  }
+
+  updateTimeInterval = setInterval(()=>{
+    if (queueIndex >= queue.length + 1) {
+      text.value = "Loading " + Math.floor(animState.loadingPercent * 100) + "%";
+    }
+  }, 1000);
 }
+
+onUnmounted(()=>{
+  clearInterval(updateTimeInterval);
+});
 </script>
 
 <template>

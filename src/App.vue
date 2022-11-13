@@ -8,8 +8,10 @@ const animState = useAnimStateStore();
 
 <template>
   <Canvas id="canvas"/>
-  <Loading v-if="!animState.loadingScreenFinished || animState.loadingPercent < 1"/>
-  <main v-else />
+  <Transition>
+    <Loading v-if="!animState.loadingScreenFinished || animState.loadingPercent < 1"/>
+    <main v-else/>
+  </Transition>
 </template>
 
 <style scoped>
@@ -33,6 +35,18 @@ main {
 }
 </style>
 <style>
+.v-enter-active,
+.v-leave-active {
+  transition: all 1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  transform: scale(2);
+  opacity: 0;
+}
+
+
 html, body {
   margin: 0;
   padding: 0;
