@@ -70,7 +70,7 @@ loader.load('scene.glb', async (gltf) => {
   //Fit the camera to the screen
   camera.aspect = window.innerWidth / window.innerHeight;
 
-  let fov = 15.376895462908774;
+  let fov = 18;
 
   if (camera.aspect < 1) {
     fov = 25 / camera.aspect;
