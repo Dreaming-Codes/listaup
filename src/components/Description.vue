@@ -17,7 +17,7 @@ const getCurrentText = computed(() => {
     <div v-if="getCurrentText" class="container">
       <GlitchedWriter :text="getCurrentText.title" appear class="text title"></GlitchedWriter>
       <br>
-      <a :href="'mailto:' + getCurrentText.email">
+      <a :href="'mailto:' + getCurrentText.email" target="_blank">
         <GlitchedWriter :text="getCurrentText.email" appear class="text email"></GlitchedWriter>
       </a>
     </div>
@@ -28,11 +28,13 @@ const getCurrentText = computed(() => {
 .container {
   position: fixed;
   bottom: 0;
-  height: 30vh;
+  height: 25vh;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.58) 100%);
   width: 100%;
   font-family: 'Roboto Mono', monospace;
   text-align: center;
+  overflow: hidden;
+  padding-top: 5vh;
 }
 
 .text {
@@ -41,11 +43,11 @@ const getCurrentText = computed(() => {
 }
 
 .title {
-  font-size: 4vw;
+  font-size: 10vmin;
 }
 
 .email {
-  font-size: 2vw;
+  font-size: 5vmin;
 }
 
 a {
