@@ -124,7 +124,7 @@ $black: #1d1e22;
       $steps: 10;
 
       @for $i from 0 through $steps {
-        #{percentage($i * 1 / $steps)} {
+        #{percentage(calc($i * 1 / $steps))} {
           transform: skew(random(10) - 5 + deg);
         }
       }
@@ -133,8 +133,9 @@ $black: #1d1e22;
       $steps: 20;
 
       @for $i from 0 through $steps {
-        #{percentage($i * 1 / $steps)} {
-          opacity: random(10) / 10;
+        #{percentage(calc($i * 1 / $steps))} {
+          //noinspection CssInvalidPropertyValue
+          opacity: calc(random(10) / 10);
         }
       }
     }
@@ -142,7 +143,7 @@ $black: #1d1e22;
       $steps: 20;
 
       @for $i from 0 through $steps {
-        #{percentage($i * 1 / $steps)} {
+        #{percentage(calc($i * 1 / $steps))} {
           clip: rect(random(100) + px, 1000px, random(100) + px, 0);
           transform: skew(random(16) - 8 + deg) translatex(random(30) - 15 + px);
         }
@@ -152,7 +153,7 @@ $black: #1d1e22;
       $steps: 20;
 
       @for $i from 0 through $steps {
-        #{percentage($i * 1 / $steps)} {
+        #{percentage(calc($i * 1 / $steps))} {
           clip: rect(random(100) + px, 1000px, random(100) + px, 0);
           transform: skew(random(10) - 5 + deg) translatex(random(20) - 10 + px);
         }
