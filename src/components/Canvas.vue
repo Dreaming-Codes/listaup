@@ -27,8 +27,17 @@ const animState = useAnimStateStore();
 
 let animMixer: AnimationMixer;
 
+let targetScrollNumber = 0;
+
 //Animation loop
 function animate() {
+  const scrollDifference = targetScrollNumber - animState.scrollPercent;
+
+  if(Math.abs(scrollDifference) != 0){
+    animState.scrollPercent += Math.abs(scrollDifference) < 1 ? scrollDifference : 0.2 * (scrollDifference / Math.abs(scrollDifference));
+    animMixer.setTime(animState.scrollPercent)
+  }
+
   //Tell webgl to call animate again on the next frame
   requestAnimationFrame(animate);
 
@@ -117,12 +126,7 @@ onMounted(() => {
       scroll = 0;
     }
 
-    animState.scrollPercent = scroll;
-
-    //Setting animation time to the scroll percent
-    if (animMixer) {
-      animMixer.setTime(scroll);
-    }
+    targetScrollNumber = scroll;
   })
 
   canvas.value?.appendChild(renderer.domElement);
