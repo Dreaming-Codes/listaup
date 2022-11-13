@@ -83,7 +83,7 @@ animState.animText.push({
     });
 
 function setCameraFov(){
-  let fov = 20;
+  let fov = 18;
 
   console.log("Aspect ratio: ", camera.aspect)
 
