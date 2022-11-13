@@ -58,7 +58,7 @@ loader.load('scene.glb', async (gltf) => {
 
   //Add the animations to the animation mixer
   animMixer = new AnimationMixer(gltf.scene);
-  animMixer.timeScale = 0.333;
+  animMixer.timeScale = 0.33333332;
 
   //Play all the animations of the model
   gltf.animations.forEach((clip) => {
