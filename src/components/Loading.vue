@@ -14,7 +14,6 @@ const glitchedWriterOptions = {
 let queueIndex = 0;
 const queue = [
   "Lista",
-  "Up",
   "ListaUp",
   "Lista Up"
 ];
