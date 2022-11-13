@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {AnimationMixer, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
+import {AnimationMixer, Color, PerspectiveCamera, Scene, sRGBEncoding, WebGLRenderer} from "three";
 import {onMounted, ref} from "vue";
 import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {useAnimStateStore} from "../stores/animState";
@@ -91,7 +91,6 @@ loader.load('scene.glb', async (gltf) => {
 
   animState.loadingPercent = 1;
   console.log(animState.loadingPercent)
-  document.documentElement.style.overflowY = "overlay";
 
 }, (progress)=>{
   animState.loadingPercent = progress.loaded / progress.total * 0.9;

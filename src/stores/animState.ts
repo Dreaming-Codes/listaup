@@ -5,8 +5,8 @@ export const useAnimStateStore = defineStore('animState', () => {
   const scrollPercent = ref(0);
   //TODO: Use errorState to display an error screen
   const errorState = ref<ErrorEvent | null>(null);
-  //TODO: Use is loading state to show loading screen
   const loadingPercent = ref(0);
+  const loadingScreenFinished = ref(false);
 
-  return { scrollPercent, errorState, loadingPercent }
+  return { scrollPercent, errorState, loadingPercent, loadingScreenFinished }
 })

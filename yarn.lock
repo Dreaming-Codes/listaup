@@ -1309,6 +1309,11 @@ get-symbol-description@^1.0.0:
     call-bind "^1.0.2"
     get-intrinsic "^1.1.1"
 
+glitched-writer@^2.0.29:
+  version "2.0.29"
+  resolved "https://registry.yarnpkg.com/glitched-writer/-/glitched-writer-2.0.29.tgz#36598b95e0aaa1148b5f6094e5be758f1b35d0ba"
+  integrity sha512-ItmmiFTSKVIbs/ngTLAszsu2czKYXYar54GgJcST5U6BH7sAaivG3fgDJFDIgNaau7rGadV5bLu3QThd5iAC8w==
+
 globals@^13.2.0:
   version "13.17.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-13.17.0.tgz#902eb1e680a41da93945adbdcb5a9f361ba69bd4"
@@ -2198,6 +2203,19 @@ vue-demi@*:
   version "0.13.11"
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.11.tgz#7d90369bdae8974d87b1973564ad390182410d99"
   integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
+
+vue-demi@^0.11.2:
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.11.4.tgz#6101992fe4724cf5634018a16e953f3052e94e2a"
+  integrity sha512-/3xFwzSykLW2HiiLie43a+FFgNOcokbBJ+fzvFXd0r2T8MYohqvphUyDQ8lbAwzQ3Dlcrb1c9ykifGkhSIAk6A==
+
+vue-glitched-writer@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/vue-glitched-writer/-/vue-glitched-writer-1.2.2.tgz#a2b78797aa39fe42a1a658f7d3f86ae1d183d27e"
+  integrity sha512-gZkJadoABPqAf2WI5EBvf8HQhDMdGD4DX7KzRHx/J/lDqhLcuxt0Xi8BRv0MEgk7f+vOyz6NOCHSw3pVTgkRpA==
+  dependencies:
+    glitched-writer "^2.0.29"
+    vue-demi "^0.11.2"
 
 vue-template-compiler@^2.7.10:
   version "2.7.13"

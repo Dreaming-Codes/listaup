@@ -7,10 +7,9 @@ const animState = useAnimStateStore();
 </script>
 
 <template>
-  <Loading v-if="animState.loadingPercent < 1"/>
   <Canvas id="canvas"/>
-  <main>
-  </main>
+  <Loading v-if="!animState.loadingScreenFinished || animState.loadingPercent < 1"/>
+  <main v-else />
 </template>
 
 <style scoped>
@@ -43,7 +42,8 @@ html, body {
 }
 
 * {
-  overflow-y: hidden;
+  /*noinspection CssInvalidPropertyValue*/
+  overflow-y: overlay;
   overflow-x: hidden;
 }
 
