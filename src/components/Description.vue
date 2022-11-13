@@ -13,6 +13,7 @@ const getCurrentText = computed(() => {
 
 const glitchedWriterOptions = {
   letterize: true,
+  interval: [50, 100]
 };
 </script>
 
