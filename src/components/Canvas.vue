@@ -61,25 +61,26 @@ const loader = new GLTFLoader();
 //Set the draco loader as the decoder for the GLTF loader
 loader.setDRACOLoader(dracoLoader);
 
+
 animState.animText.push({
       title: 'Lorenzo Rizzotti',
       email: 'rizzotti@listaup.net',
-      range: [16.18705035971223, 25.899280575539567],
+      range: [14.814814814814813, 24.88425925925926],
     },
     {
       title: 'Maya Bellanca',
       email: 'maya@listaup.net',
-      range: [32.82374100719424, 43.589414182939365],
+      range: [31.48148148148148, 41.2037037037037],
     },
     {
       title: 'Alessandro Skvortsov',
       email: 'alessandro@listaup.net',
-      range: [50.51387461459404, 60.22610483042138],
+      range: [47.51387461459404, 57.22610483042138],
     },
     {
       title: "Piernoel Asuncion",
       email: "asuncion@listaup.net",
-      range: [70.516443987667, 80.22610483042138],
+      range: [67.516443987667, 77.22610483042138],
     });
 
 function setCameraFov(){
@@ -100,7 +101,7 @@ loader.load('scene.glb', async (gltf) => {
 
   //Add the animations to the animation mixer
   animMixer = new AnimationMixer(gltf.scene);
-  animMixer.timeScale = 0.33333332;
+  animMixer.timeScale = 0.35;
 
   //Play all the animations of the model
   gltf.animations.forEach((clip) => {
