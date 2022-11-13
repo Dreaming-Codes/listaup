@@ -74,7 +74,6 @@ $black: #1d1e22;
 .glitchedEffect {
   .text {
     position: relative;
-    padding: 30px;
     color: $light-blue;
     will-change: contents, width;
 
