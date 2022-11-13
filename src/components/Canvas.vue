@@ -82,6 +82,18 @@ animState.animText.push({
       range: [70.516443987667, 80.22610483042138],
     });
 
+function setCameraFov(){
+  let fov = 20;
+
+  console.log("Aspect ratio: ", camera.aspect)
+
+  if (camera.aspect < 1) {
+    fov = 28 / camera.aspect;
+  }
+
+  camera.fov = fov;
+}
+
 loader.load('scene.glb', async (gltf) => {
   //Add the loaded model to the scene
   scene.add(gltf.scene);
@@ -100,13 +112,7 @@ loader.load('scene.glb', async (gltf) => {
   //Fit the camera to the screen
   camera.aspect = window.innerWidth / window.innerHeight;
 
-  let fov = 18;
-
-  if (camera.aspect < 1) {
-    fov = 25 / camera.aspect;
-  }
-
-  camera.fov = fov;
+  setCameraFov();
 
   //Update the camera projection matrix
   camera.updateProjectionMatrix();
@@ -158,13 +164,7 @@ onMounted(() => {
     if (camera) {
       camera.aspect = window.innerWidth / window.innerHeight;
 
-      let fov = 15.376895462908774;
-
-      if (camera.aspect < 1) {
-        fov = 20 / camera.aspect;
-      }
-
-      camera.fov = fov;
+      setCameraFov();
 
       camera.updateProjectionMatrix();
     }
