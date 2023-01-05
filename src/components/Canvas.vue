@@ -54,7 +54,7 @@ function animate() {
 const dracoLoader = new DRACOLoader();
 //Using decoder from the latest GitHub commit
 //TODO: Use a local copy of the decoder
-dracoLoader.setDecoderPath('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/libs/draco/');
+dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
 
 //GLTF loader
 const loader = new GLTFLoader();
